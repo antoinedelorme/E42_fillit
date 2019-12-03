@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   annex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelorme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:01:44 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/02 18:01:46 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/03 17:21:05 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	test_piece(t_piece pc)
 	{
 		flag = pc.data[i];
 		nb_blocks += flag;
-		total += flag && ((i - SIZE) > 0 ? pc.data[i - SIZE] : 0);
+		total += flag && ((i - SIZE) >= 0 ? pc.data[i - SIZE] : 0);
 		total += flag && ((i + SIZE) < (SIZE * SIZE) ? pc.data[i + SIZE] : 0);
 		total += flag && ((i == (SIZE - 1) % SIZE) ? 0 : pc.data[i + 1]);
 		total += flag && ((i == 0 % SIZE) ? 0 : pc.data[i - 1]);
@@ -96,23 +96,23 @@ int	test_piece(t_piece pc)
 	return ((nb_blocks == 4) && (total >= 6));
 }
 
-int	read_file(char *name, t_piece *liste, int *nb)
+int	read_file(char *name, t_liste *entree)
 {
 	int i;
 	int j;
 
 	i = 0;
 	j = 0;
-	init_data(liste);
-	if (test_conform(name, liste, nb) == -1)
+	init_data(entree->pieces);
+	if (test_conform(name, entree->pieces, &(entree->nb)) == -1)
 		return (-1);
-	while (i < *nb)
+	while (i < entree->nb)
 	{
-		if (!test_piece(liste[i]))
+		if (!test_piece(entree->pieces[i]))
 			return (-1);
-		extract_compressed(liste + i);
+		extract_compressed(entree->pieces + i);
 		j = 0;
-		while (j < (liste + i)->lenght * (liste + i)->width)
+		while (j < (entree->pieces + i)->lenght * (entree->pieces + i)->width)
 			j++;
 		i++;
 	}

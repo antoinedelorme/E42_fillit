@@ -3,24 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   annex2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelorme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:07:36 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/02 18:07:39 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/03 15:52:21 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include "libft.h"
 #include <stdio.h>
-
-int	found_solution(t_piece *liste, int nb_piece, int size)
-{
-	(void) *liste;
-	(void) nb_piece;
-	(void) size;
-	return (0);
-}
 
 void	init_data(t_piece list[NB_MAX])
 {
@@ -50,10 +42,34 @@ void	init_data(t_piece list[NB_MAX])
 	}
 }
 
+void	display(t_piece *piece)
+{
+	int x;
+	int y;
+	
+		x = 0;
+		while (x < piece->lenght)
+		{
+			y = 0;
+			while (y < piece->width)
+			{
+				if (piece->data_compressed[x * piece->width + y])
+				ft_putstr("🧮");
+			else 
+				ft_putstr("🧾");
+				y++;
+			}
+			printf("\n");
+			x++;
+		}
+	
+}
+
 void	extract_compressed(t_piece *piece)
 {
 	int i;
-
+	int x;
+	int y;
 	i = 0;
 	while (i < SIZE * SIZE)
 	{
@@ -70,17 +86,14 @@ void	extract_compressed(t_piece *piece)
 	i = 0;
 	piece->width = (piece->column_max - piece->column_min + 1);
 	piece->lenght = (piece->row_max - piece->row_min + 1);
+	
 	while (i < piece->width * piece->lenght)
 	{
-		piece->data_compressed[i] = piece->data[i % (piece->width) +
-	piece->column_min + i / (piece->width) + piece->row_min * SIZE];
+		x = i / piece->width + piece->row_min;
+		y = i % piece->width + piece->column_min;
+		piece->data_compressed[i] = piece->data[x * SIZE + y];
 		i++;
 	}
 }
 
-int	display(t_piece *liste,int nb_piece)
-{
-	(void) *liste;
-	(void) nb_piece;
-	return (0);
-}
+
