@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:07:36 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/04 18:25:45 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/04 18:29:47 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,7 @@ void insert_remove(t_grille grille, t_piece piece, int pos)
 int	found_solution(t_liste *entree, int index, int next_pos, t_grille grille)
 {
 	int try;
-	int temp;
-	char *str;
-	
+
 	if (index == entree->nb)
 		return (grille.size);
 	while ((try = try_insert(grille, entree->pieces[index], next_pos)) != -1 && next_pos != grille.size * grille.size)
@@ -93,7 +91,6 @@ int	found_solution(t_liste *entree, int index, int next_pos, t_grille grille)
 				break;
 			}
 				index++;
-	
 			if (found_solution(entree, index, next_pos, grille))
 			{
 				(entree->pieces + index - 1)->pos_sol = next_pos;

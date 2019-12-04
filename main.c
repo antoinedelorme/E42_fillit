@@ -4,28 +4,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void display_tableau (t_grille grille, int index)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (i < grille.size)
-	{
-		while (j < grille.size)
-		{
-			if (grille.tableaux[i * grille.size + j])
-				ft_putstr("🧮");
-			else 
-				ft_putstr("🧾");
-			j++;
-		}
-		ft_putstr("\n");
-		j = 0;
-		i++;
-	}
-}
 int find_solution(t_liste *entree)
 {
 	t_grille grille;
@@ -56,7 +34,6 @@ int main(int ac, char **av)
 	t_piece liste[NB_MAX];
 	t_liste entree;
 	int size;
-	int **tableau;
 	
 	entree.nb = 0;
 	entree.pieces = liste;

@@ -12,7 +12,7 @@ int	find_next_pos(t_grille grille, int pos)
 
 int *gen_tableau(t_liste solution, int size)
 {
-	char i;
+	int i;
 	int j;
 	int k;
 	int *tableau;
@@ -86,13 +86,7 @@ void affiche_solution(t_liste solution, int size)
 	int j;
 	int k;
 	int *tableau;
-	int X;
-	int Y;
-
-
-
-
-		
+	
 	tableau = gen_tableau(solution, size);
 	i = 0;
 		k = 0;
