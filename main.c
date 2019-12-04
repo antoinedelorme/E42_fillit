@@ -4,18 +4,18 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void display_tableau (int *tableau, int size)
+void display_tableau (t_grille grille, int index)
 {
 	int i;
 	int j;
 
 	i = 0;
 	j = 0;
-	while (i < size)
+	while (i < grille.size)
 	{
-		while (j < size)
+		while (j < grille.size)
 		{
-			if (tableau[i * size + j])
+			if (grille.tableaux[i * grille.size + j])
 				ft_putstr("🧮");
 			else 
 				ft_putstr("🧾");
@@ -26,31 +26,30 @@ void display_tableau (int *tableau, int size)
 		i++;
 	}
 }
-void find_solution(t_liste *entree)
+int find_solution(t_liste *entree)
 {
 	t_grille grille;
 	int		i;
+	t_sol_vector	vector_sol;
+	int	size;
+	//int		vecteur_sol[NB_MAX];
 
-	grille.size = 8;
-	
+	grille.size = 4;
+	ft_memset((void*)vector_sol.sol, '\0', sizeof(int) * NB_MAX);
 	 while (1)
 	 {
 		 i = 0;
-		 grille.tableaux = (int**)ft_memalloc(sizeof(int*));
-		 while (i < entree->nb)
-		 	{
-				 grille.tableaux[i] = (int*)ft_memalloc(grille.size * grille.size * sizeof(int));
-				 display(entree->pieces + i);
-				 printf("\n");
-				 i++;
-			}
-			insert(grille, entree->pieces[0], 0, 0);
-			display_tableau (grille.tableaux[0], grille.size);
-			return;
-			if (found_solution(entree, 0, 0, grille))
-				return;
-		 grille.size++;
-	 }
+		grille.tableaux = (int*)ft_memalloc(grille.size * grille.size * sizeof(int));
+		vector_sol.current = 0;
+		if ((size = found_solution(entree, 0, 0, grille)))
+				return(size);
+		ft_memdel((void**)&grille.tableaux);
+
+		grille.size++;
+		i++;
+	}
+		
+	 
 }
 int main(int ac, char **av)
 {
@@ -61,7 +60,6 @@ int main(int ac, char **av)
 	
 	entree.nb = 0;
 	entree.pieces = liste;
-	size = 4;
 	if (ac != 2)
 	{
 		ft_putstr("usage: ./fillit file\n");
@@ -74,8 +72,8 @@ int main(int ac, char **av)
 		ft_putstr("error\n");
 		return (0);
 	}
-	find_solution( &entree);
-	
+	size = find_solution( &entree);
+	affiche_solution(entree, size);
 	return (1);
 }
 
