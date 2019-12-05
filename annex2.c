@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:07:36 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/05 11:13:16 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/05 17:00:25 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_data(t_piece list[NB_MAX])
 			while (k < SIZE)
 			{
 				list->data[j + j * k] = 0;
-				list->data_compressed[j + j * k] = 0;
+				list->zip[j + j * k] = 0;
 				k++;
 			}
 			j++;
@@ -64,7 +64,7 @@ void	extract_compressed(t_piece *piece)
 	piece->lenght = (piece->row_max - piece->row_min + 1);
 	while (i < piece->width * piece->lenght)
 	{
-		piece->data_compressed[i] = piece->data[(i / piece->width +
+		piece->zip[i] = piece->data[(i / piece->width +
 		piece->row_min) * SIZE + (i % piece->width + piece->column_min)];
 		i++;
 	}

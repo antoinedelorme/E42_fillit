@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:46:44 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/05 16:44:13 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/05 17:09:49 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ int	find_solution(t_liste *entree)
 (grille.l * grille.l * sizeof(int));
 		vector_sol.current = 0;
 		if ((size = found_solution(entree, 0, 0, grille)))
+		{
+			ft_memdel((void**)&grille.tableaux);
 			return (size);
+		}
 		ft_memdel((void**)&grille.tableaux);
 		grille.l++;
 		i++;
