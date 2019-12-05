@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:07:36 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/05 15:38:33 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/05 16:55:54 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int		try(t_grille grille, t_piece piece, int pos)
 	int pixel;
 
 	i = 0;
-	j = 0;
-	while (j < piece.width)
+	j = -1;
+	while (++j < piece.width)
 	{
 		while (i < piece.lenght)
 		{
@@ -32,14 +32,13 @@ int		try(t_grille grille, t_piece piece, int pos)
 			else
 				pixel = grille.tableaux[((pos / grille.l) + i)
 				* grille.l + (pos % grille.l) + j];
-			if (pixel && piece.data_compressed[(i * piece.width) + j])
+			if (pixel && piece.zip[(i * piece.width) + j])
 			{
 				return (0);
 			}
 			i++;
 		}
 		i = 0;
-		j++;
 	}
 	return (1);
 }
@@ -56,7 +55,7 @@ void	insert_remove(t_grille grille, t_piece piece, int pos)
 	{
 		while (i < piece.lenght)
 		{
-			pixel = piece.data_compressed[(i * piece.width) + j] ^
+			pixel = piece.zip[(i * piece.width) + j] ^
 			grille.tableaux[((pos / grille.l) + i) * grille.l +
 			(pos % grille.l) + j];
 			grille.tableaux[((pos / grille.l) + i) * grille.l
@@ -65,32 +64,6 @@ void	insert_remove(t_grille grille, t_piece piece, int pos)
 		}
 		i = 0;
 		j++;
-	}
-}
-
-void display_grid(t_grille grd)
-{
-	int i;
-	int j;
-
-	i = 0;
-	
-	while (i < grd.l)
-	{
-		j = 0;
-		while (j < grd.l)
-		{
-			if (grd.tableaux[j + i * grd.l] > 0)
-				ft_putstr("@");
-			else
-			{
-				ft_putstr(".");
-			}
-			
-			j++;
-		}
-		ft_putstr("\n");
-		i++;
 	}
 }
 
@@ -107,7 +80,7 @@ int		found_solution(t_liste *ent, int idx, int pos, t_grille grd)
 			insert_remove(grd, ent->pieces[idx], pos);
 			if ((find_pos(pos)) == grd.l * grd.l)
 			{
-			insert_remove(grd, ent->pieces[idx], pos);
+				insert_remove(grd, ent->pieces[idx], pos);
 				break ;
 			}
 			if (found_solution(ent, ++idx, 0, grd))
@@ -119,6 +92,5 @@ int		found_solution(t_liste *ent, int idx, int pos, t_grille grd)
 		}
 		pos = find_pos(pos);
 	}
-	
 	return (0);
 }

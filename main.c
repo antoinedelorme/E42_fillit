@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:46:44 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/05 15:19:46 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/05 16:44:13 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int racine(int x)
+int	racine(int x)
 {
-	int y = 0;
+	int y;
 
+	y = 0;
 	while (y * y < x)
 		y++;
 	return (y - 1);
@@ -67,6 +68,10 @@ int	main(int ac, char **av)
 		return (0);
 	}
 	size = find_solution(&entree);
-	affiche_solution(entree, size);
+	if (!affiche_solution(entree, size))
+	{
+		ft_putstr("error\n");
+		return (0);
+	}
 	return (1);
 }
