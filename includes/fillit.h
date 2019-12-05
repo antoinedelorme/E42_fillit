@@ -3,36 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   fillit.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelorme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:17:17 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/02 18:21:25 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/05 17:23:57 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLIT_H
 # define FILLIT_H
-# define KBLOCK 'x'
+# define KBLOCK '#'
 # define KEMPTY '.'
-# include <string.h>
 # define NB_MAX 26
 # define SIZE 4
+# ifdef COLOR
+#  define CHAR 4
+#  define LETTERS  "🏴🐽🦷🐡💀💭🧠🐝👹👻🤖👾😺🙈💋💔💥👹🐽🦷🐡💀💭🧠🐝👹👻🤖👾😺🙈💋💔💥👹"
+# else
+#  define CHAR 1
+#  define LETTERS ".ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+# endif
 
-typedef	struct		s_piece
+# include <string.h>
+
+typedef	struct	s_piece
 {
 	int	data[SIZE * SIZE];
-	int	data_compressed[SIZE * SIZE];
+	int	zip[SIZE * SIZE];
 	int	row_min;
 	int	row_max;
 	int	column_min;
 	int	column_max;
 	int	width;
 	int	lenght;
-}					t_piece;
+	int	pos_sol;
+}				t_piece;
 
-int					read_file(char *name, t_piece *liste, int *nb);
-int					found_solution(t_piece *liste, int nb_piece, int size);
-int					display(t_piece *liste, int nb_piece);
-void				init_data(t_piece list[NB_MAX]);
-void				extract_compressed(t_piece *piece);
+typedef struct	s_liste
+{
+	t_piece	*pieces;
+	int		nb;
+}				t_liste;
+
+typedef struct	s_grille
+{
+	int *tableaux;
+	int	l;
+	int index;
+}				t_grille;
+
+typedef struct	s_sol_vector
+{
+	int sol[NB_MAX];
+	int current;
+}				t_sol_vector;
+
+void			display(t_piece *piece);
+void			insert(t_grille grille, t_piece piece, int pos);
+int				read_file(char *name, t_liste *entree);
+int				found_solution(t_liste *entree, int index,
+int next_pos, t_grille grille);
+void			init_data(t_piece list[NB_MAX]);
+void			extract_compressed(t_piece *piece);
+int				find_pos(int pos);
+int				get_next_index(t_liste entree, t_sol_vector sol_vector);
+int				affiche_solution(t_liste solution, int size);
 #endif
