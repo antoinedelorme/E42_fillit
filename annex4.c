@@ -4,12 +4,19 @@
 #include <unistd.h>
 
 
-int	find_pos(t_grille grille, int pos)
+int	find_pos(int pos)
 {
 	pos++;
-	//while (grille.tableaux[pos] && pos < grille.l * grille.l)
-	//	pos++;
 	return (pos);
+}
+
+void clean_tableau(char *tab, int size, char *letters)
+{
+	int	i;
+
+	i = -1;
+	while (++i < size * size)
+		ft_memcpy(tab + i * CHAR, letters , CHAR);
 }
 
 char *gen_tableau(t_liste solution, int size)
@@ -19,45 +26,20 @@ char *gen_tableau(t_liste solution, int size)
 	int k;
 	char *tableau;
 	char *letters;
-	int W;
-	int X;
-	int Y;
-
-
 	
 	tableau = (char*)ft_memalloc(size * size * sizeof(char) * CHAR);
-	letters = (char*)ft_memalloc(28 * sizeof(char) * CHAR);
-
-	letters = LETTERS;
-	
-	i = 0;
-	while (i < size * size)
+	letters = LETTERS;	
+	clean_tableau(tableau, size, letters);
+	i = -1;
+	while (++i < solution.nb)
 	{
-		ft_memcpy(tableau + i * CHAR , letters , CHAR);
-		i++;
-	}
-
-		
-	i = 0;
-	while (i < solution.nb)
-	{
-		k = 0;
-		W = solution.pieces[i].width;
-				
-		while (k < solution.pieces[i].lenght)
+		k = -1;
+		while (++k < solution.pieces[i].lenght)
 		{
-			j = 0;
-			while (j < solution.pieces[i].width)
-			{
-				X = solution.pieces[i].pos_sol%size + j;
-				Y = solution.pieces[i].pos_sol/size + k;
-				ft_memcpy(tableau + CHAR * (Y*size + X), solution.pieces[i].data_compressed[j + k*W] ? letters + (i + 1) * CHAR : tableau + CHAR * (Y*size + X), CHAR);
-				//tableau[(Y*size + X) * CHAR] = solution.pieces[i].data_compressed[j + k*W] ?  letters[(i + 1) * CHAR] : tableau[(Y*size + X) * CHAR] ;
-				j++;
-			}
-			k++;
+			j = -1;
+			while (++j < solution.pieces[i].width)
+				ft_memmove(tableau + CHAR * ((solution.pieces[i].pos_sol/size + k)*size + solution.pieces[i].pos_sol%size + j), solution.pieces[i].data_compressed[j + k* solution.pieces[i].width] ? letters + (i + 1) * CHAR : tableau + CHAR * ((solution.pieces[i].pos_sol/size + k)*size + solution.pieces[i].pos_sol%size + j), CHAR);
 		}
-		i++;
 	}
 	return (tableau);
 }
@@ -84,6 +66,6 @@ void affiche_solution(t_liste solution, int size)
 			k++;
 		}
 		i++;
-	
+	ft_strdel(&tableau);
 }
 

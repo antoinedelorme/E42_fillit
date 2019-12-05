@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:01:44 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/03 17:21:05 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/05 15:34:51 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	conform_line(char *line, int index, t_piece list[NB_MAX])
 {
 	int i;
 
-	i = 0;
+	i = -1;
 	if (index % (SIZE + 1) == SIZE)
 	{
 		if (*line == '\0')
@@ -31,7 +31,7 @@ int	conform_line(char *line, int index, t_piece list[NB_MAX])
 		}
 		return (0);
 	}
-	while (line[i])
+	while (line[++i])
 	{
 		if ((!((line[i] == KBLOCK) || (line[i] == KEMPTY))))
 		{
@@ -40,10 +40,9 @@ int	conform_line(char *line, int index, t_piece list[NB_MAX])
 		}
 		list[index / (SIZE + 1)].data[(index % (SIZE + 1)) * SIZE + i] =
 	(line[i] == KBLOCK ? 1 : 0);
-		i++;
 	}
 	ft_strdel(&line);
-	return ((i <= SIZE));
+	return ((i == SIZE));
 }
 
 int	test_conform(char *name, t_piece liste[NB_MAX], int *nb)

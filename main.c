@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:46:44 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/05 10:58:31 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/05 15:19:46 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+int racine(int x)
+{
+	int y = 0;
+
+	while (y * y < x)
+		y++;
+	return (y - 1);
+}
+
 int	find_solution(t_liste *entree)
 {
 	t_grille		grille;
@@ -23,7 +32,7 @@ int	find_solution(t_liste *entree)
 	t_sol_vector	vector_sol;
 	int				size;
 
-	grille.l = 4;
+	grille.l = racine(entree->nb);
 	ft_memset((void*)vector_sol.sol, '\0', sizeof(int) * NB_MAX);
 	while (1)
 	{
