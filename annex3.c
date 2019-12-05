@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:07:36 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/05 16:55:54 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/05 18:47:24 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,19 @@ int		try(t_grille grille, t_piece piece, int pos)
 
 	i = 0;
 	j = -1;
+	if (piece.width + pos % grille.l > grille.l)
+		return (0);
+	if (piece.lenght + pos / grille.l > grille.l)
+		return (0); 
 	while (++j < piece.width)
 	{
 		while (i < piece.lenght)
 		{
-			if (((pos / grille.l) + i) >= grille.l ||
-			((pos % grille.l) + j) >= grille.l)
-				pixel = 1;
-			else
-				pixel = grille.tableaux[((pos / grille.l) + i)
+			
+			pixel = grille.tableaux[((pos / grille.l) + i)
 				* grille.l + (pos % grille.l) + j];
 			if (pixel && piece.zip[(i * piece.width) + j])
-			{
 				return (0);
-			}
 			i++;
 		}
 		i = 0;
