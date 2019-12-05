@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:46:44 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/05 17:09:49 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/05 17:47:50 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,13 @@ int	find_solution(t_liste *entree)
 	}
 }
 
+int	exit_error(void)
+{
+	ft_putstr("error\n");
+	exit(EXIT_FAILURE);
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	t_piece	liste[NB_MAX];
@@ -66,15 +73,10 @@ int	main(int ac, char **av)
 		return (0);
 	}
 	if (read_file(av[1], &entree) == -1)
-	{
-		ft_putstr("error\n");
-		return (0);
-	}
+		return (exit_error());
 	size = find_solution(&entree);
 	if (!affiche_solution(entree, size))
-	{
-		ft_putstr("error\n");
-		return (0);
-	}
+		return (exit_error());
+	exit(EXIT_SUCCESS);
 	return (1);
 }
