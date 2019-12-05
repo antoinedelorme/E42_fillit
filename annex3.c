@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:07:36 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/04 18:29:47 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/05 14:42:17 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,93 +14,144 @@
 #include "libft.h"
 #include <stdio.h>
 
-
-int try_insert(t_grille grille, t_piece piece, int pos)
+void	display(t_piece *piece)
 {
-	int X;
-	int Y;
+	int x;
+	int y;
+
+		x = 0;
+		while (x < piece->lenght)
+		{
+			y = 0;
+			while (y < piece->width)
+			{
+				if (piece->data_compressed[x * piece->width + y])
+				ft_putstr("🧮");
+			else
+				ft_putstr("🧾");
+				y++;
+			}
+			printf("\n");
+			x++;
+		}
+
+}
+
+int		try(t_grille grille, t_piece piece, int pos)
+{
 	int i;
 	int j;
 	int pixel;
-	
-	X = pos / grille.size;
-	Y = pos % grille.size;
+
 	i = 0;
 	j = 0;
-
+	//printf("trying to insert in pos: %i\n", pos);
 	while (j < piece.width)
 	{
 		while (i < piece.lenght)
+		{
+			if (((pos / grille.l) + i) >= grille.l ||
+			((pos % grille.l) + j) >= grille.l)
+				pixel = 1;
+			else
+				pixel = grille.tableaux[((pos / grille.l) + i)
+				* grille.l + (pos % grille.l) + j];
+			if (pixel && piece.data_compressed[(i * piece.width) + j])
 			{
-				if ((X + i) >= grille.size || (Y + j) >= grille.size)
-					pixel = 1;
-				else
-					pixel = grille.tableaux[(X + i) * grille.size + Y + j];
-				if ( pixel && piece.data_compressed[(i * piece.width) + j])
-					return (0);
-				i++;
+	//			printf("failed\n");
+				return (0);
 			}
+			i++;
+		}
 		i = 0;
 		j++;
 	}
+	//printf("success\n");
 	return (1);
 }
 
-
-
-void insert_remove(t_grille grille, t_piece piece, int pos)
+void	insert_remove(t_grille grille, t_piece piece, int pos)
 {
-	int X;
-	int Y;
 	int i;
 	int j;
 	int pixel;
-	
-	X = pos / grille.size;
-	Y = pos % grille.size;
+
 	i = 0;
 	j = 0;
 	while (j < piece.width)
 	{
 		while (i < piece.lenght)
-			{
-				pixel = piece.data_compressed[(i * piece.width) + j]^grille.tableaux[(X + i) * grille.size + Y + j]; 
-				grille.tableaux[(X + i) * grille.size + Y + j] = pixel;
-				i++;
-			}
+		{
+			pixel = piece.data_compressed[(i * piece.width) + j] ^
+			grille.tableaux[((pos / grille.l) + i) * grille.l +
+			(pos % grille.l) + j];
+			grille.tableaux[((pos / grille.l) + i) * grille.l
+			+ (pos % grille.l) + j] = pixel;
+			i++;
+		}
 		i = 0;
 		j++;
 	}
 }
 
-
-int	found_solution(t_liste *entree, int index, int next_pos, t_grille grille)
+void display_grid(t_grille grd)
 {
-	int try;
+	int i;
+	int j;
+	int pixel;
 
-	if (index == entree->nb)
-		return (grille.size);
-	while ((try = try_insert(grille, entree->pieces[index], next_pos)) != -1 && next_pos != grille.size * grille.size)
+	i = 0;
+	
+	while (i < grd.l)
 	{
-		if (try == 1)
+		j = 0;
+		while (j < grd.l)
 		{
-			insert_remove(grille, entree->pieces[index], next_pos);
-			if((find_next_pos(grille, next_pos)) == grille.size * grille.size)
+			if (grd.tableaux[j + i * grd.l] > 0)
+				printf("@");
+			else
 			{
-				insert_remove(grille, entree->pieces[index], next_pos);
-				break;
+				printf(".");
 			}
-				index++;
-			if (found_solution(entree, index, next_pos, grille))
-			{
-				(entree->pieces + index - 1)->pos_sol = next_pos;
-				return (grille.size);
-			}
-			index--;
-			insert_remove(grille, entree->pieces[index], next_pos);
-		}
 			
-		next_pos = find_next_pos(grille, next_pos);
+			j++;
+		}
+		printf("\n");
+		i++;
 	}
+}
+
+int		found_solution(t_liste *ent, int idx, int pos, t_grille grd)
+{
+	int t;
+
+	if (idx == ent->nb)
+		return (grd.l);
+	while ((t = try(grd, ent->pieces[idx], pos)) != -1 && pos != grd.l * grd.l)
+	{
+		if (t == 1)
+		{
+		//	printf("inserting\n");
+			insert_remove(grd, ent->pieces[idx], pos);
+	//		display_grid(grd);
+			if ((find_pos(grd, pos)) == grd.l * grd.l)
+			{
+		//	printf("[a]removing\n");
+			insert_remove(grd, ent->pieces[idx], pos);
+	//		display_grid(grd);
+				break ;
+			}
+			if (found_solution(ent, ++idx, 0, grd))
+			{
+				(ent->pieces + idx - 1)->pos_sol = pos;
+				return (grd.l);
+			}
+	//	printf("[b]removing\n");
+			insert_remove(grd, ent->pieces[--idx], pos);
+	//		display_grid(grd);
+		}
+		pos = find_pos(grd, pos);
+	}
+	
 	return (0);
 }

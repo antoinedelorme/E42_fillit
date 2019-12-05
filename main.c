@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adelorme <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:46:44 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/04 18:49:42 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/05 10:58:31 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ int	find_solution(t_liste *entree)
 	t_sol_vector	vector_sol;
 	int				size;
 
-	grille.size = 4;
+	grille.l = 4;
 	ft_memset((void*)vector_sol.sol, '\0', sizeof(int) * NB_MAX);
 	while (1)
 	{
 		i = 0;
 		grille.tableaux = (int*)ft_memalloc
-(grille.size * grille.size * sizeof(int));
+(grille.l * grille.l * sizeof(int));
 		vector_sol.current = 0;
 		if ((size = found_solution(entree, 0, 0, grille)))
 			return (size);
 		ft_memdel((void**)&grille.tableaux);
-		grille.size++;
+		grille.l++;
 		i++;
 	}
 }
