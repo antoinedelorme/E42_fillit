@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:07:36 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/06 14:13:02 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/06 18:49:51 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-int		try(t_grille grille, t_piece piece, t_pos pos)
+int		try(t_grille grille, t_piece *piece, t_pos pos)
 {
 	int i;
 	int j;
@@ -22,17 +22,17 @@ int		try(t_grille grille, t_piece piece, t_pos pos)
 
 	i = 0;
 	j = -1;
-	if (piece.lenght + pos.x > grille.l)
+	if (piece->lenght + pos.x > grille.l)
 		return (0);
-	if (piece.width + pos.y > grille.l)
+	if (piece->width + pos.y > grille.l)
 		return (0); 
-	while (++j < piece.width)
+	while (++j < piece->width)
 	{
-		while (i < piece.lenght)
+		while (i < piece->lenght)
 		{
 			
 			pixel = grille.tableaux[pos.x + i][pos.y +j];
-			if (pixel && piece.zip[(i * piece.width) + j])
+			if (pixel && piece->zip[(i * piece->width) + j])
 				return (0);
 			i++;
 		}
@@ -67,7 +67,7 @@ int		found_solution(t_liste *ent, int idx, t_pos pos, t_grille grd)
 	int t;
 	if (idx == ent->nb)
 		return (grd.l);
-	while ((pos.x != grd.l || pos.y != 0) && (t = try(grd, ent->pieces[idx], pos)) != -1) 
+	while ((pos.x != grd.l || pos.y != 0) && (t = try(grd, &ent->pieces[idx], pos)) != -1) 
 	{
 		if (t == 1)
 		{
