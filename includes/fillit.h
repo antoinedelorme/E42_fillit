@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:17:17 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/06 14:37:54 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/06 16:18:01 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@
 # endif
 
 # include <string.h>
+#include <time.h>
 
 int cpt_back;
 int cpt_showhide;
 int cpt_testok;
-
+double total_time;
 
 typedef struct	s_pos
 {
