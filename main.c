@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:46:44 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/06 15:21:52 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/06 16:18:17 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "fillit.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 int	racine(int x)
 {
@@ -75,6 +76,7 @@ int	main(int ac, char **av)
 	if (read_file(av[1], &entree) == -1)
 		return (exit_error());
 	size = find_solution(&entree);
+	printf("time: %6.4f\n" , total_time);
 	//printf("back: %i || testok: %i  || showhide: %i\n" , cpt_back, cpt_testok, cpt_showhide);
 	if (!affiche_solution(entree, size))
 		return (exit_error());

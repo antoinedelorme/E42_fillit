@@ -6,20 +6,22 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:07:36 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/06 15:25:06 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/06 16:17:51 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 #include "libft.h"
 #include <stdio.h>
+#include <time.h>
 
 int		try(t_grille grille, t_piece piece, t_pos pos)
 {
 	int i;
 	int j;
-	//int pixel;
-
+	struct timespec start, end;
+	
+	clock_gettime(CLOCK_MONOTONIC, &start);
 	i = 0;
 	j = -1;
 	cpt_testok++;
@@ -37,6 +39,8 @@ int		try(t_grille grille, t_piece piece, t_pos pos)
 		}
 		i = 0;
 	}
+	clock_gettime(CLOCK_MONOTONIC, &end);
+	total_time += (double)(end.tv_nsec - start.tv_nsec)/1000000;
 	return (1);
 }
 
@@ -80,7 +84,6 @@ int		found_solution(t_liste *ent, int idx, t_pos pos, t_grille grd)
 			}
 			if (found_solution(ent, ++idx, (t_pos){0,0} , grd))
 			{
-	//			printf("SOL piece: %i x: %i y: %i\n", idx -1, pos.x, pos.y);
 				(ent->pieces + idx - 1)->t_pos_sol = pos;
 				return (grd.l);
 			}
