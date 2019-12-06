@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:46:33 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/06 12:01:57 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/06 14:09:59 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include "libft.h"
 #include <unistd.h>
+#include <stdio.h>
 
 t_pos		find_pos(t_pos pos, int width)
 {
@@ -57,15 +58,27 @@ int		gen_tableau(t_liste sol, int size, char **tab)
 	while (++i < sol.nb)
 	{
 		k = -1;
+		printf("AFF piece: %i x: %i y: %i\n", i, sol.pieces[i].t_pos_sol.x, sol.pieces[i].t_pos_sol.y);
+			
 		while (++k < sol.pieces[i].lenght)
 		{
 			j = -1;
 			while (++j < sol.pieces[i].width)
-				ft_memmove(*tab + CHAR * ((sol.pieces[i].pos_sol / size + k)
-				* size + sol.pieces[i].pos_sol % size + j), sol.pieces[i].
+			{
+				ft_memmove(*tab + CHAR * ((sol.pieces[i].t_pos_sol.x + k)
+				* size + sol.pieces[i].t_pos_sol.y + j), sol.pieces[i].
 				zip[j + k * sol.pieces[i].width] ? letters + (i + 1)
-				* CHAR : *tab + CHAR * ((sol.pieces[i].pos_sol / size + k)
-				* size + sol.pieces[i].pos_sol % size + j), CHAR);
+				* CHAR : *tab + CHAR * ((sol.pieces[i].t_pos_sol.x + k)
+				* size + sol.pieces[i].t_pos_sol.y + j), CHAR);
+			
+			}
+			
+		// ft_memmove(*tab + CHAR * ((sol.pieces[i].pos_sol / size + k)
+		// 		* size + sol.pieces[i].pos_sol % size + j), sol.pieces[i].
+		// 		zip[j + k * sol.pieces[i].width] ? letters + (i + 1)
+		// 		* CHAR : *tab + CHAR * ((sol.pieces[i].pos_sol / size + k)
+		// 		* size + sol.pieces[i].pos_sol % size + j), CHAR);
+		// 
 		}
 	}
 	return (1);
@@ -77,6 +90,7 @@ int		affiche_solution(t_liste solution, int size)
 	int		k;
 	char	*tableau;
 
+	printf("----------------  DISPLAY SOLUTION\n");
 	tableau = NULL;
 	if (!gen_tableau(solution, size, &tableau))
 		return (-1);

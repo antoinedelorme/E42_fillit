@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:07:36 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/06 13:00:28 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/06 13:59:36 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,10 @@ int		found_solution(t_liste *ent, int idx, t_pos pos, t_grille grd)
 	{
 		if (t == 1)
 		{
-			//printf("inserting:%i x:%i y:%i\n",idx, pos.x, pos.y);
 			insert_remove(grd, ent->pieces[idx], pos);
 		
 			if (pos_compare(pos, (t_pos){grd.l, 0}))
 			{
-			//	printf("[a]removing:%i x:%i y:%i\n",idx, pos.x, pos.y);
 				insert_remove(grd, ent->pieces[idx], pos);
 				break ;
 			}
@@ -86,7 +84,6 @@ int		found_solution(t_liste *ent, int idx, t_pos pos, t_grille grd)
 				(ent->pieces + idx - 1)->t_pos_sol = pos;
 				return (grd.l);
 			}
-			//printf("[b]removing:%i x:%i y:%i\n",idx - 1, pos.x, pos.y);
 			insert_remove(grd, ent->pieces[--idx], pos);
 		}
 		pos = find_pos(pos, grd.l);
