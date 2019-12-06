@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:17:17 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/06 16:18:01 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/06 17:35:46 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef	struct	s_piece
 {
 	int	data[SIZE * SIZE];
 	int	data2[SIZE][SIZE];
-	int	zip[SIZE * SIZE];
+	//int	zip[SIZE * SIZE];
 	int	row_min;
 	int	row_max;
 	int	column_min;
@@ -67,21 +67,16 @@ typedef struct	s_grille
 	int index;
 }				t_grille;
 
-typedef struct	s_sol_vector
-{
-	int sol[NB_MAX];
-	int current;
-}				t_sol_vector;
+
 
 void			display(t_piece *piece);
 void			insert(t_grille grille, t_piece piece, t_pos pos);
 int				read_file(char *name, t_liste *entree);
 int				found_solution(t_liste *entree, int index,
-t_pos next_pos, t_grille grille);
+t_pos next_pos, t_grille *grille);
 void			init_data(t_piece list[NB_MAX]);
 void			extract_compressed(t_piece *piece);
 t_pos				find_pos(t_pos pos, int width);
-int				get_next_index(t_liste entree, t_sol_vector sol_vector);
 int				affiche_solution(t_liste solution, int size);
 int		pos_compare(t_pos pos1, t_pos pos2);
 #endif

@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:46:44 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/06 16:18:17 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/06 17:33:09 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,17 @@ int	racine(int x)
 int	find_solution(t_liste *entree)
 {
 	t_grille		grille;
-	t_sol_vector	vector_sol;
 	int				size;
 	int 			i;
 
 	grille.l = racine(entree->nb * 4) + 1;
-	ft_memset((void*)vector_sol.sol, '\0', sizeof(int) * NB_MAX);
 	while (1)
 	{
 		i = -1;
 		grille.tableaux = (int**)ft_memalloc(grille.l * sizeof(int*));
 		while (++i < grille.l)
 			grille.tableaux[i] = (int*)ft_memalloc(grille.l * sizeof(int));
-		vector_sol.current = 0;
-		if ((size = found_solution(entree, 0, (t_pos){0,0}, grille)))
+		if ((size = found_solution(entree, 0, (t_pos){0,0}, &grille)))
 		{
 			ft_memdel((void**)&grille.tableaux);
 			return (size);

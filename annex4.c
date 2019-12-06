@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:46:33 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/06 14:12:52 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/06 17:43:36 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,10 @@ int		gen_tableau(t_liste sol, int size, char **tab)
 			{
 				ft_memmove(*tab + CHAR * ((sol.pieces[i].t_pos_sol.x + k)
 				* size + sol.pieces[i].t_pos_sol.y + j), sol.pieces[i].
-				zip[j + k * sol.pieces[i].width] ? letters + (i + 1)
+				 data2[k][j] ? letters + (i + 1)
 				* CHAR : *tab + CHAR * ((sol.pieces[i].t_pos_sol.x + k)
 				* size + sol.pieces[i].t_pos_sol.y + j), CHAR);
-			
 			}
-			
-		// ft_memmove(*tab + CHAR * ((sol.pieces[i].pos_sol / size + k)
-		// 		* size + sol.pieces[i].pos_sol % size + j), sol.pieces[i].
-		// 		zip[j + k * sol.pieces[i].width] ? letters + (i + 1)
-		// 		* CHAR : *tab + CHAR * ((sol.~
-		//pieces[i].pos_sol / size + k)
-		// 		* size + sol.pieces[i].pos_sol % size + j), CHAR);
-		// 
 		}
 	}
 	return (1);
