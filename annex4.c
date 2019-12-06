@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 16:46:33 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/05 16:58:35 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/06 12:01:57 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,22 @@
 #include "libft.h"
 #include <unistd.h>
 
-int		find_pos(int pos)
+t_pos		find_pos(t_pos pos, int width)
 {
-	pos++;
+	pos.y ++;
+	if (pos.y == width)
+		{
+			pos.y = 0;
+			(pos.x)++;
+		}
 	return (pos);
+}
+
+int		pos_compare(t_pos pos1, t_pos pos2)
+{
+	if ((pos1.x != pos2.x) || (pos1.y != pos2.y))
+		return (0);
+	return (1);
 }
 
 void	clean_tableau(char *tab, int size, char *letters)

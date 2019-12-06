@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:46:44 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/05 17:47:50 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/06 12:48:21 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,28 @@ int	racine(int x)
 int	find_solution(t_liste *entree)
 {
 	t_grille		grille;
-	int				i;
 	t_sol_vector	vector_sol;
 	int				size;
+	int 			i;
 
-	grille.l = racine(entree->nb);
+	grille.l = racine(entree->nb * 4) + 1;
 	ft_memset((void*)vector_sol.sol, '\0', sizeof(int) * NB_MAX);
+	printf("algo running...\n");
 	while (1)
 	{
-		i = 0;
-		grille.tableaux = (int*)ft_memalloc
-(grille.l * grille.l * sizeof(int));
+		i = -1;
+		grille.tableaux = (int**)ft_memalloc(grille.l * sizeof(int*));
+		while (++i < grille.l)
+			grille.tableaux[i] = (int*)ft_memalloc(grille.l * sizeof(int));
 		vector_sol.current = 0;
-		if ((size = found_solution(entree, 0, 0, grille)))
+		printf("running algo for size: %i\n", grille.l);
+		if ((size = found_solution(entree, 0, (t_pos){0,0}, grille)))
 		{
 			ft_memdel((void**)&grille.tableaux);
 			return (size);
 		}
 		ft_memdel((void**)&grille.tableaux);
 		grille.l++;
-		i++;
 	}
 }
 
