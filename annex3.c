@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:07:36 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/06 14:13:02 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/06 15:25:06 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,20 @@ int		try(t_grille grille, t_piece piece, t_pos pos)
 {
 	int i;
 	int j;
-	int pixel;
+	//int pixel;
 
 	i = 0;
 	j = -1;
-	if (piece.lenght + pos.x > grille.l)
-		return (0);
-	if (piece.width + pos.y > grille.l)
-		return (0); 
-	while (++j < piece.width)
+	cpt_testok++;
+	 if (piece.lenght + pos.x > grille.l)
+	 	return (0);
+	 if (piece.width + pos.y > grille.l)
+	 	return (0); 
+	 while (++j < piece.width)
 	{
 		while (i < piece.lenght)
 		{
-			
-			pixel = grille.tableaux[pos.x + i][pos.y +j];
-			if (pixel && piece.zip[(i * piece.width) + j])
+			if (grille.tableaux[pos.x + i][pos.y +j] && piece.data2[i][j])
 				return (0);
 			i++;
 		}
@@ -45,16 +44,15 @@ void	insert_remove(t_grille grille, t_piece piece, t_pos pos)
 {
 	int i;
 	int j;
-	int pixel;
-
+	
 	i = 0;
 	j = 0;
+	cpt_showhide++;
 	while (j < piece.width)
 	{
 		while (i < piece.lenght)
 		{
-			pixel = piece.zip[(i * piece.width) + j] ^ grille.tableaux[pos.x + i][pos.y +j];
-			grille.tableaux[pos.x + i][pos.y +j] = pixel;
+			grille.tableaux[pos.x + i][pos.y +j] = piece.zip[(i * piece.width) + j] ^ grille.tableaux[pos.x + i][pos.y +j];
 			i++;
 		}
 		i = 0;
@@ -65,6 +63,8 @@ void	insert_remove(t_grille grille, t_piece piece, t_pos pos)
 int		found_solution(t_liste *ent, int idx, t_pos pos, t_grille grd)
 {
 	int t;
+
+	cpt_back++;
 	if (idx == ent->nb)
 		return (grd.l);
 	while ((pos.x != grd.l || pos.y != 0) && (t = try(grd, ent->pieces[idx], pos)) != -1) 
