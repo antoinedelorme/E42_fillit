@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 DATA = ./srcs/
 INCLUDES = ./includes/
-SRC	= ${wildcard ${DATA}ft*.c} ${DATA}get_next_line.c main.c annex.c
+SRC	= ${wildcard ${DATA}ft*.c} ${DATA}get_next_line.c main.c annex.c annex2.c annex3.c annex4.c
 OBJ = ${SRC:.c=.o}
 NAME = libft.a
 EXEC = fillit
