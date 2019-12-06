@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:46:44 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/06 12:48:21 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/06 14:12:20 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	find_solution(t_liste *entree)
 
 	grille.l = racine(entree->nb * 4) + 1;
 	ft_memset((void*)vector_sol.sol, '\0', sizeof(int) * NB_MAX);
-	printf("algo running...\n");
 	while (1)
 	{
 		i = -1;
@@ -43,7 +42,6 @@ int	find_solution(t_liste *entree)
 		while (++i < grille.l)
 			grille.tableaux[i] = (int*)ft_memalloc(grille.l * sizeof(int));
 		vector_sol.current = 0;
-		printf("running algo for size: %i\n", grille.l);
 		if ((size = found_solution(entree, 0, (t_pos){0,0}, grille)))
 		{
 			ft_memdel((void**)&grille.tableaux);

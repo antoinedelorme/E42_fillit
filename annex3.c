@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:07:36 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/06 13:59:36 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/06 14:13:02 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int		found_solution(t_liste *ent, int idx, t_pos pos, t_grille grd)
 			}
 			if (found_solution(ent, ++idx, (t_pos){0,0} , grd))
 			{
-				printf("SOL piece: %i x: %i y: %i\n", idx -1, pos.x, pos.y);
+	//			printf("SOL piece: %i x: %i y: %i\n", idx -1, pos.x, pos.y);
 				(ent->pieces + idx - 1)->t_pos_sol = pos;
 				return (grd.l);
 			}

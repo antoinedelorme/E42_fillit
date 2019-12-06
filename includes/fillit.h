@@ -6,7 +6,7 @@
 /*   By: adelorme <adelorme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 18:17:17 by adelorme          #+#    #+#             */
-/*   Updated: 2019/12/05 17:23:57 by adelorme         ###   ########.fr       */
+/*   Updated: 2019/12/06 11:50:14 by adelorme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@
 
 # include <string.h>
 
+typedef struct	s_pos
+{
+	int	x;
+	int	y;
+}				t_pos;
+
+
 typedef	struct	s_piece
 {
 	int	data[SIZE * SIZE];
@@ -37,6 +44,7 @@ typedef	struct	s_piece
 	int	width;
 	int	lenght;
 	int	pos_sol;
+	t_pos	t_pos_sol;
 }				t_piece;
 
 typedef struct	s_liste
@@ -47,7 +55,7 @@ typedef struct	s_liste
 
 typedef struct	s_grille
 {
-	int *tableaux;
+	int **tableaux;
 	int	l;
 	int index;
 }				t_grille;
@@ -59,13 +67,14 @@ typedef struct	s_sol_vector
 }				t_sol_vector;
 
 void			display(t_piece *piece);
-void			insert(t_grille grille, t_piece piece, int pos);
+void			insert(t_grille grille, t_piece piece, t_pos pos);
 int				read_file(char *name, t_liste *entree);
 int				found_solution(t_liste *entree, int index,
-int next_pos, t_grille grille);
+t_pos next_pos, t_grille grille);
 void			init_data(t_piece list[NB_MAX]);
 void			extract_compressed(t_piece *piece);
-int				find_pos(int pos);
+t_pos				find_pos(t_pos pos, int width);
 int				get_next_index(t_liste entree, t_sol_vector sol_vector);
 int				affiche_solution(t_liste solution, int size);
+int		pos_compare(t_pos pos1, t_pos pos2);
 #endif
