@@ -18,9 +18,8 @@ int		try(t_grille grille, t_piece *piece, t_pos pos)
 {
 	int i;
 	int j;
-	int pixel;
-
-	i = 0;
+	
+	i = -1;
 	j = -1;
 	if (piece->lenght + pos.x > grille.l)
 		return (0);
@@ -28,15 +27,10 @@ int		try(t_grille grille, t_piece *piece, t_pos pos)
 		return (0); 
 	while (++j < piece->width)
 	{
-		while (i < piece->lenght)
-		{
-			
-			pixel = grille.tableaux[pos.x + i][pos.y +j];
-			if (pixel && piece->zip[(i * piece->width) + j])
+		while (++i < piece->lenght)
+			if (grille.tableaux[pos.x + i][pos.y + j] && piece->zip[(i * piece->width) + j])
 				return (0);
-			i++;
-		}
-		i = 0;
+		i = -1;
 	}
 	return (1);
 }
@@ -45,16 +39,14 @@ void	insert_remove(t_grille grille, t_piece piece, t_pos pos)
 {
 	int i;
 	int j;
-	int pixel;
-
+	
 	i = 0;
 	j = 0;
 	while (j < piece.width)
 	{
 		while (i < piece.lenght)
 		{
-			pixel = piece.zip[(i * piece.width) + j] ^ grille.tableaux[pos.x + i][pos.y +j];
-			grille.tableaux[pos.x + i][pos.y +j] = pixel;
+			grille.tableaux[pos.x + i][pos.y + j] = piece.zip[(i * piece.width) + j] ^ grille.tableaux[pos.x + i][pos.y + j];
 			i++;
 		}
 		i = 0;
